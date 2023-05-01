@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.ConfigFragment">
+
+    <TextView
+        android:id="@+id/tvConfig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Configuración"
+        android:textSize="24sp"
+        android:textColor="#E8E6E6"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvActionAlert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="El botón de bloqueo del dispositivo es el que\n                      activará la alerta"
+        app:layout_constraintTop_toBottomOf="@id/tvConfig"
+        android:layout_marginStart="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        android:textSize="19sp"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/rbActionAlert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Botón de bloqueo"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tvActionAlert"
+        app:layout_constraintStart_toStartOf="@id/tvActionAlert"/>
+
+    <TextView
+        android:id="@+id/tvTimeActionAlert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Seleccione la cantidad de veces para presionar el botón"
+        app:layout_constraintTop_toBottomOf="@id/rbActionAlert"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <RadioGroup
+        android:id="@+id/rGButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvTimeActionAlert"
+        app:layout_constraintStart_toStartOf="@id/tvActionAlert">
+
+        <RadioButton
+            android:id="@+id/rbTimeActionAlert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2" />
+
+        <RadioButton
+            android:id="@+id/rbTimeActionAlert1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            app:layout_constraintTop_toBottomOf="@id/rbTimeActionAlert"
+            app:layout_constraintStart_toStartOf="@id/tvActionAlert"/>
+
+    </RadioGroup>
+
+
+
+    <TextView
+        android:id="@+id/tvSoundAlert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Seleccione el sonido de la alarma"
+        app:layout_constraintTop_toBottomOf="@id/rGButton"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/alarm_spinner"
+        app:layout_constraintTop_toBottomOf="@+id/tvSoundAlert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <Button
+        android:id="@+id/nextBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Continuar"
+        android:textSize="18sp"
+        android:backgroundTint="#2196F3"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
