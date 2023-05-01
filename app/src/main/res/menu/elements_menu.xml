@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_action_name"
+            android:title="Dashboard" />
+
+        <item
+            android:id="@+id/nav_config"
+            android:icon="@drawable/baseline_build_24"
+            android:title="Configuración" />
+
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/baseline_person_24"
+            android:title="Perfil de usuario" />
+
+
+    </group>
+</menu>
