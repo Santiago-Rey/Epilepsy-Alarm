@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/initFragment">
+
+    <fragment
+        android:id="@+id/initFragment"
+        android:name="com.sr.configuration.view.InitFragment"
+        tools:layout="@layout/fragment_init"
+        android:label="initFragment" >
+        <action
+            android:id="@+id/action_initFragment_to_signUpUser"
+            app:destination="@id/signUpUser" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpUser"
+        android:name="com.sr.configuration.view.SignUpUserFragment"
+        tools:layout="@layout/fragment_sign_up_user"
+        android:label="signUpUser" >
+        <action
+            android:id="@+id/action_signUpUser_to_configFragment"
+            app:destination="@id/configFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/configFragment"
+        android:name="com.sr.configuration.view.ConfigFragment"
+        tools:layout="@layout/fragment_config"
+        android:label="ConfigFragment" >
+        <action
+            android:id="@+id/action_configFragment_to_locationFragment"
+            app:destination="@id/locationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="com.sr.configuration.view.LocationFragment"
+        tools:layout="@layout/fragment_location"
+        android:label="LocationFragment" >
+        <action
+            android:id="@+id/action_locationFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.sr.configuration.view.DashboardFragment"
+        android:label="DashboardFragment" />
+</navigation>
