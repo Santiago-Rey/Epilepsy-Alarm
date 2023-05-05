@@ -17,6 +17,7 @@ import com.sr.epilepsyalarm.R
 import com.sr.configuration.data.SharedPreferenceDataSourceImpl
 import com.sr.epilepsyalarm.data.repository.MessageRepository
 import com.sr.configuration.util.Constants.keySound
+import com.sr.epilepsyalarm.view.BlockMessageActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -43,19 +44,26 @@ class LockedReceiver : BroadcastReceiver() {
     private fun startFunction(context: Context) {
         val result = goAsync()
         val coroutineScope = CoroutineScope(Dispatchers.Default)
+        val activityIntent = Intent(context, BlockMessageActivity::class.java)
+        //activityIntent.putExtra("user_emergency", )
+        activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+        // Iniciar la actividad
+        context!!.startActivity(activityIntent)
 
         coroutineScope.launch {
             val messageRepository = MessageRepository()
             messageRepository.sendMessage(context)
             messageRepository.sendSMS(context)
+            messageRepository.getUser()
             result.finish()
         }
-        showMessage(context)
+       // showMessage(context)
         NotificationManager.showNotification(context)
         startAlarm(context)
     }
 
-    fun showMessage(context: Context){
+    /*fun showMessage(context: Context){
 
         view = LayoutInflater.from(context).inflate(R.layout.message_notify, null)
 
@@ -69,7 +77,7 @@ class LockedReceiver : BroadcastReceiver() {
         )
 
         windowManager.addView(view, layoutParams)
-    }
+    }*/
 
 
 
