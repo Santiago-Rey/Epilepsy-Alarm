@@ -9,6 +9,7 @@ import com.sr.epilepsyalarm.data.MessageEntity
 import com.sr.configuration.data.SharedPreferenceDataSourceImpl
 import com.sr.epilepsyalarm.data.Text
 import com.sr.configuration.domain.PreferenceUseCase
+import com.sr.configuration.domain.UserModel
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -39,7 +40,7 @@ class MessageRepository {
                 val original = chain.request()
 
                 val request = original.newBuilder()
-                    .header("Authorization", "Bearer EAAKt4SA1Vy0BALegWXgFglHpYGNEQgBLsVVFqdX7WSRXZBZBL9uzKopZCzKKdOJXEaHLcwh4JY0gNpVbh8GKGG6EeblsvDwOgSkpCURmtGVBLe5ooj8ZCPvNZAtSsfoOa4ktxu4O65Dz51jCamlWk0lclaRF6sY6c1FQ8Qh3L09MZBviHuC8ZBeWW6ZB4ElHvOZCyWuSF5t8XBdtJWDGOsl3f")
+                    .header("Authorization", "Bearer EAAKt4SA1Vy0BADCZAyefz3rtnsopgQnov3m67qekt1W3h7UHdpSdEdZASpujJkXSiTaPev18ls6MZBbwXclq9u1kJO2sOPzTIDXZCJEVQZBlbZCT9JLyL2ZCBIHQv5abZC2S6W2NUORrvLoY7UFiBPDIcSMsssVl8zl9YHpZAN7o6qoq9Tkg9LmgZAZBGnGhyXXCx2PGOh8nVrtDoGKk0ZCYNqBbJPC5nX9k2aIZD")
                     .method(original.method(), original.body())
                     .build()
 
@@ -49,7 +50,7 @@ class MessageRepository {
 
 
         return Retrofit.Builder()
-            .baseUrl("https://graph.facebook.com/v16.0/108029642271423/")
+            .baseUrl("https://graph.facebook.com/v16.0/107212639037071/")
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -57,6 +58,10 @@ class MessageRepository {
 
     private suspend fun getMessage(): String {
         return UserUseCase().getUser()?.messageAlert?: "Mensaje de alerta"
+    }
+
+    suspend fun getUser(): UserModel {
+        return UserUseCase().getUser()!!
     }
 
     private fun getLocation(context: Context): String {
