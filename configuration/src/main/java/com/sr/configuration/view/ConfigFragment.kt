@@ -28,6 +28,7 @@ class ConfigFragment : Fragment(), IOptionSelectListener {
 
     private var _binding: FragmentConfigBinding? = null
     private val myViewModel: ConfigurationViewModel by activityViewModels()
+    val mediaPlayer = MediaPlayer()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -83,14 +84,15 @@ class ConfigFragment : Fragment(), IOptionSelectListener {
 
     private fun setAlarm() {
         val selectMusicSpinner = binding.alarmSpinner
-        val mediaPlayer = MediaPlayer()
+        val stopButton = binding.stopButton
+
         //UpMaxVolume()
         //flashOn()
 
         val audioResources = mapOf(
-            "alarma 1" to R.raw.alarm_one,
-            "alarma 2" to R.raw.alarm_two,
-            "alarma 3" to R.raw.alarm_three
+            "Alarma 1" to R.raw.alarm_one,
+            "Alarma 2" to R.raw.alarm_two,
+            "Alarma 3" to R.raw.alarm_three
         )
 
         val adapter = ArrayAdapter(
@@ -122,16 +124,35 @@ class ConfigFragment : Fragment(), IOptionSelectListener {
                         start()
                     }
                     myViewModel.soundAlarm.value = audioResource
+
+                    stopButton.visibility = View.VISIBLE
                 }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
+        stopButton.setOnClickListener {
+            stopAlarm()
+        }
+
+
     }
 
     override fun onOptionSelected(option: Int) {
         pulseCount = option
+    }
+
+
+
+    private fun stopAlarm() {
+        // Detener la alarma si está sonando
+        if (mediaPlayer.isPlaying) {
+            mediaPlayer.stop()
+        }
+
+        // Mostrar botón de reproducir y ocultar botón de detener
+        binding.stopButton.visibility = View.GONE
     }
 
 }

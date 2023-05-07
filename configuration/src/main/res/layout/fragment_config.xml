@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="Configuración"
         android:textSize="24sp"
-        android:textColor="#E8E6E6"
+        android:textColor="@color/black"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -88,6 +88,17 @@
         app:layout_constraintTop_toBottomOf="@+id/tvSoundAlert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/alarm_spinner"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Detener"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"/>
 
 
     <Button
