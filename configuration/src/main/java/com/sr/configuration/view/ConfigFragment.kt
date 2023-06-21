@@ -35,6 +35,11 @@ class ConfigFragment : Fragment(), IOptionSelectListener {
     private val binding get() = _binding!!
     private var pulseCount = 2
     private val mainViewModel: DashboardViewModel by viewModels()
+    val audioResources = mapOf(
+        "Alarma 1" to R.raw.alarm_one,
+        "Alarma 2" to R.raw.alarm_two,
+        "Alarma 3" to R.raw.alarm_three
+    )
 
 
     override fun onCreateView(
@@ -84,16 +89,10 @@ class ConfigFragment : Fragment(), IOptionSelectListener {
 
     private fun setAlarm() {
         val selectMusicSpinner = binding.alarmSpinner
-        val stopButton = binding.stopButton
-
         //UpMaxVolume()
         //flashOn()
 
-        val audioResources = mapOf(
-            "Alarma 1" to R.raw.alarm_one,
-            "Alarma 2" to R.raw.alarm_two,
-            "Alarma 3" to R.raw.alarm_three
-        )
+
 
         val adapter = ArrayAdapter(
             requireContext(),
@@ -105,42 +104,41 @@ class ConfigFragment : Fragment(), IOptionSelectListener {
             audioResources[it] == mainViewModel.getAlarm(requireContext())
         }
         selectMusicSpinner.setSelection(position + 1)
-        selectMusicSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position != 0) {
-                    val audioName = parent.getItemAtPosition(position) as String
-                    val audioResource = audioResources[audioName]
-                    val audioUri =
-                        Uri.parse("android.resource://${requireActivity().packageName}/${audioResource}")
-                    mediaPlayer.apply {
-                        reset()
-                        setDataSource(requireContext(), audioUri)
-                        prepare()
-                        start()
-                    }
-                    myViewModel.soundAlarm.value = audioResource
 
-                    stopButton.visibility = View.VISIBLE
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
-
-        stopButton.setOnClickListener {
+        binding.stopButton.setOnClickListener {
             stopAlarm()
         }
 
+        binding.playButton.setOnClickListener {
+            playAlarm()
+        }
 
     }
 
     override fun onOptionSelected(option: Int) {
         pulseCount = option
+    }
+
+    private fun playAlarm(){
+        val selectMusicSpinner = binding.alarmSpinner
+        val position = selectMusicSpinner.selectedItemPosition
+
+        if (position != 0) {
+            val audioResource = audioResources.toList().get(position-1).second
+            val audioUri =
+                Uri.parse("android.resource://${requireActivity().packageName}/${audioResource}")
+            mediaPlayer.apply {
+                reset()
+                setDataSource(requireContext(), audioUri)
+                prepare()
+                start()
+            }
+            myViewModel.soundAlarm.value = audioResource
+
+        }
+
+        binding.playButton.visibility = View.GONE
+        binding.stopButton.visibility = View.VISIBLE
     }
 
 
@@ -153,6 +151,7 @@ class ConfigFragment : Fragment(), IOptionSelectListener {
 
         // Mostrar botón de reproducir y ocultar botón de detener
         binding.stopButton.visibility = View.GONE
+        binding.playButton.visibility = View.VISIBLE
     }
 
 }
