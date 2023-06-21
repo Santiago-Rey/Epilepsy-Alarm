@@ -64,6 +64,8 @@ class BlockMessageActivity : AppCompatActivity() {
         stopButton.setOnClickListener {
             stopAlarm()
             flashOff()
+            finish()
+
         }
     }
     private fun flashOff() {
