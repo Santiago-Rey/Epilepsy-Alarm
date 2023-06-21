@@ -41,7 +41,6 @@ class ButtonService : Service() {
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setContentTitle(getString(R.string.app_name))
-            .setContentText("Tu mensaje aquí")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
 
         val channel = NotificationChannel(
