@@ -3,9 +3,15 @@ package com.sr.epilepsyalarm.view
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sr.configuration.data.SharedPreferenceDataSourceImpl
 import com.sr.configuration.domain.PreferenceUseCase
 import com.sr.configuration.data.SharedPrefsRepositoryImpl
+import com.sr.configuration.domain.UserModel
+import com.sr.epilepsyalarm.data.repository.MessageRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainViewModel : ViewModel() {
 
@@ -33,6 +39,15 @@ class MainViewModel : ViewModel() {
         val sharedPrefsRepository = SharedPrefsRepositoryImpl(SharedPreferenceDataSourceImpl(context))
         val preferenceUseCase = PreferenceUseCase(sharedPrefsRepository)
         preferenceUseCase.savePreference(key, value)
+    }
+
+    fun sendInitMessage() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                val messageRepository = MessageRepository()
+                messageRepository.sendInitMessage()
+            }
+        }
     }
 
 
