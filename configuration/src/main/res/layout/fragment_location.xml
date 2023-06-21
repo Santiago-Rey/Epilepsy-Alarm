@@ -15,43 +15,11 @@
             android:layout_height="wrap_content"
             android:text="Ubicación"
             android:textSize="24sp"
-            android:textColor="#E8E6E6"
+            android:textColor="@color/black"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvActiveLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Activar Ubicación del dispositivo"
-            app:layout_constraintTop_toBottomOf="@id/tvLocation"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <RadioGroup
-            android:id="@+id/rGLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tvActiveLocation"
-            app:layout_constraintStart_toStartOf="@id/tvActiveLocation">
-            <RadioButton
-                android:id="@+id/rbActiveLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Si" />
-
-            <RadioButton
-                android:id="@+id/rbActiveLocation1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="No"
-                app:layout_constraintTop_toBottomOf="@id/rbActiveLocation"
-                app:layout_constraintStart_toStartOf="@id/rbActiveLocation" />
-        </RadioGroup>
-
 
 
         <TextView
@@ -59,7 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mapa de Ubicación del dispositivo"
-            app:layout_constraintTop_toBottomOf="@id/rGLocation"
+            app:layout_constraintTop_toBottomOf="@id/tvLocation"
+            android:textSize="15sp"
+            android:textColor="@color/black"
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
             app:layout_constraintStart_toStartOf="parent" />
