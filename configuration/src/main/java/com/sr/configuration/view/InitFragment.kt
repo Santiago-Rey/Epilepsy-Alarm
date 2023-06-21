@@ -24,13 +24,19 @@ class InitFragment : Fragment() {
 
         val textView = binding.tvInstructions
 
-        val instrucciones = " Con cuidado recueste a la persona en el piso.\n" +
-                " Voltee a la persona suavemente hacia un lado. Esto la ayudará a respirar.\n" +
-                " Retire del área alrededor de la persona los objetos duros o filosos para prevenir lesiones.\n" +
-                " Ponga la cabeza de la persona sobre algo suave y plano, como una chaqueta doblada.\n" +
-                " Si tiene anteojos, quíteselos.\n" +
-                " Suéltele la corbata o cualquier cosa que tenga alrededor del cuello que pueda dificultar su respiración.\n" +
-                " Tome el tiempo que dure la convulsión. Llame al 911 si la convulsión dura más de 5 minutos."
+        val instrucciones =
+            " - INSTRUCCIONES PARA MANEJAR EL ATAQUE.\n\n" +
+                    " - Mantener la calma.\n" +
+                    " - No abandonar a la persona.\n" +
+                    " - Mover a la persona solo si está en peligro.\n" +
+                    " - Recostarla preferiblemente en el suelo.\n" +
+                    " - Colocar de medio lado.\n" +
+                    " - Proteger la cabeza de golpes.\n" +
+                    " - Alejar a los curiosos.\n" +
+                    " - Observar detenidamente la crisis para poder describirla al personal de salud.\n" +
+                    " - Medir el tiempo.\n" +
+                    " - Tranquilizar a la persona cuando se recupere.\n" +
+                    " - Ayudarle a orientarse."
 
         textView.text = instrucciones
         return view
