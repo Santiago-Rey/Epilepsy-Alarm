@@ -38,7 +38,7 @@ import com.sr.configuration.view.ConfigurationViewModel
 import com.sr.configuration.view.SignUpUserViewModel
 
 
-class MainActivity : AppCompatActivity(), IOptionSelectListener {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -85,6 +85,7 @@ class MainActivity : AppCompatActivity(), IOptionSelectListener {
         initListenBlockButton()
 
         lockedReceiver = LockedReceiver()
+        lockedReceiver.setPulseCount(intent.getIntExtra("passValue", 2))
         myViewModel.soundAlarm.observe(this) {
 
             mainViewModel.saveDouble(Constants.keySound, it.toDouble(),this)
@@ -109,7 +110,14 @@ class MainActivity : AppCompatActivity(), IOptionSelectListener {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
+        if(requestCode == REQUEST_CODE_PERMISSIONS && grantResults.get(2) == PackageManager.PERMISSION_DENIED){
+            Toast.makeText(
+                this,
+                "El permiso de SMS es necesario para enviar mensajes sin conexión a la RED",
+                Toast.LENGTH_SHORT
+            ).show()
+            requiredSMSPermission()
+        }
         // Verificar si se concedieron los permisos
         if (!Settings.canDrawOverlays(this)) {
 
@@ -189,21 +197,7 @@ class MainActivity : AppCompatActivity(), IOptionSelectListener {
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
 
-        // Verificar si los permisos ya han sido concedidos
-        if (!checkPermissions()) {
-            // Si no se han concedido los permisos, solicitarlos
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    Manifest.permission.SYSTEM_ALERT_WINDOW,
-                    Manifest.permission.DISABLE_KEYGUARD,
-                    Manifest.permission.SEND_SMS
-                ),
-                REQUEST_CODE_PERMISSIONS
-            )
-        } else {
-            checkNotificationPermission()
-        }
+        requiredSMSPermission()
 
     }
 
@@ -228,8 +222,23 @@ class MainActivity : AppCompatActivity(), IOptionSelectListener {
 
     }
 
-    override fun onOptionSelected(option: Int) {
-        lockedReceiver.setPulseCount(option)
+
+    private fun requiredSMSPermission(){
+        // Verificar si los permisos ya han sido concedidos
+        if (!checkPermissions()) {
+            // Si no se han concedido los permisos, solicitarlos
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.SYSTEM_ALERT_WINDOW,
+                    Manifest.permission.DISABLE_KEYGUARD,
+                    Manifest.permission.SEND_SMS
+                ),
+                REQUEST_CODE_PERMISSIONS
+            )
+        } else {
+            checkNotificationPermission()
+        }
     }
 
 
