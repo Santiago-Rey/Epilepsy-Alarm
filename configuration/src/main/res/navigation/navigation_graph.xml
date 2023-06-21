@@ -27,7 +27,7 @@
         android:id="@+id/configFragment"
         android:name="com.sr.configuration.view.ConfigFragment"
         tools:layout="@layout/fragment_config"
-        android:label="ConfigFragment" >
+        android:label="Config" >
         <action
             android:id="@+id/action_configFragment_to_locationFragment"
             app:destination="@id/locationFragment" />
@@ -36,7 +36,7 @@
         android:id="@+id/locationFragment"
         android:name="com.sr.configuration.view.LocationFragment"
         tools:layout="@layout/fragment_location"
-        android:label="LocationFragment" >
+        android:label="Location" >
         <action
             android:id="@+id/action_locationFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment" />
@@ -44,5 +44,5 @@
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.sr.configuration.view.DashboardFragment"
-        android:label="DashboardFragment" />
+        android:label="Dashboard" />
 </navigation>
