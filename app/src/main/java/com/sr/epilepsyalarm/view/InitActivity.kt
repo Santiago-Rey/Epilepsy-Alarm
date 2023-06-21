@@ -8,11 +8,12 @@ import androidx.activity.viewModels
 import com.sr.configuration.view.ConfigurationViewModel
 import com.sr.epilepsyalarm.databinding.ActivityInitBinding
 import com.sr.configuration.util.Constants.keySound
+import com.sr.configuration.util.IOptionSelectListener
 
 
-class InitActivity : AppCompatActivity() {
+class InitActivity : AppCompatActivity(), IOptionSelectListener {
     lateinit var binding: ActivityInitBinding
-
+    private var pulseNum : Int = 2
     private val mainViewModel: MainViewModel by viewModels()
     private val myViewModel: ConfigurationViewModel by viewModels()
 
@@ -29,13 +30,13 @@ class InitActivity : AppCompatActivity() {
         myViewModel.isDashboardActivate.observe(this) {
             if (it) {
                 mainViewModel.saveBoolean("first_login", true,this)
+                mainViewModel.sendInitMessage()
                 goToMainActivity()
             }
         }
         myViewModel.soundAlarm.observe(this) {
 
             mainViewModel.saveDouble(keySound, it.toDouble(),this)
-
 
         }
 
@@ -44,10 +45,19 @@ class InitActivity : AppCompatActivity() {
         }
     }
 
+
+
     private fun goToMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java).apply {
+            putExtra("passValue", pulseNum)
+        }
         startActivity(intent)
     }
+
+    override fun onOptionSelected(option: Int) {
+        pulseNum = option
+    }
+
 
 
 }
