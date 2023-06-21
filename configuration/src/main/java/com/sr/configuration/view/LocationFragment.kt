@@ -55,8 +55,8 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
         }
 
         if (deniedPermissions.isNotEmpty()) {
-            Toast.makeText(requireContext(), "No diste el permiso para acceder a la ubicación", Toast.LENGTH_LONG).show()
-
+            Toast.makeText(requireContext(), "Se necesita el permiso de ubicación para continuar", Toast.LENGTH_LONG).show()
+            requiredPermission()
         }else{
             if (isLocationEnabled()) {
                 // La ubicación está activada en el dispositivo, puedes utilizar los servicios de ubicación aquí
@@ -77,10 +77,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
 
 
         requiredPermission()
-        binding.nextBtn.setOnClickListener{
-            actualLocationManager.stopLocation(fusedLocationClient)
-            myViewModel.isDashboardActivate.value = true
-        }
+
 
 
         binding.mapView.onCreate(savedInstanceState)
@@ -146,7 +143,10 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
 
             return
         }
-
+        binding.nextBtn.setOnClickListener{
+            actualLocationManager.stopLocation(fusedLocationClient)
+            myViewModel.isDashboardActivate.value = true
+        }
         actualLocationManager.getActualLocation(fusedLocationClient){location ->
 
 // En tu método de actualización de ubicación:
