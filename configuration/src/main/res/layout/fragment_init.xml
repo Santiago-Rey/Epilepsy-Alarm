@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Instrucciones de manejo para un ataque de epilepsia"
-        android:textSize="10sp"
+        android:textSize="20sp"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:layout_marginTop="20dp"
@@ -37,16 +37,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_instructions"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:elevation="2dp"
-        android:outlineProvider="bounds"
         app:layout_constraintTop_toBottomOf="@id/tvTittleInstruction"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tv_instructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:elevation="2dp"
+            android:outlineProvider="bounds"
+            app:layout_constraintEnd_toEndOf="parent"
+             />
+
+    </ScrollView>
+
 
     <Button
         android:id="@+id/initBtn"
