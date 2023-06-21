@@ -6,7 +6,7 @@ data class MessageEntity(@SerializedName("messaging_product") val messagingProdu
                    @SerializedName("recipient_type") val recipientType: String? = null,
                    val to: String,
                    val type: String? = null,
-                   val text: Text,
+                   val text: Text? = null,
                    val template: Template? = null)
 
 data class Text(
