@@ -16,17 +16,18 @@
 
     <application
         android:name="com.sr.configuration.data.config.UserApp"
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher1"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher1"
         android:supportsRtl="true"
         android:theme="@style/Theme.EpilepsyAlarm">
         <activity
             android:name=".view.BlockMessageActivity"
             android:exported="true"
             android:showWhenLocked="true"
-            android:theme="@style/FullScreen"  />
+            android:theme="@style/FullScreen"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".infrastructure.ButtonService" />
 
@@ -43,10 +44,12 @@
             android:name=".view.MainActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/Theme.EpilepsyAlarm.NoActionBar" />
+            android:theme="@style/Theme.EpilepsyAlarm.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.InitActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
