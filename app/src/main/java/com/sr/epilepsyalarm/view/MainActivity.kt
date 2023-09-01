@@ -26,7 +26,6 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.navigation.NavigationView
 import com.sr.configuration.infrastructure.actualLocationManager
 import com.sr.configuration.util.Constants
-import com.sr.configuration.util.IOptionSelectListener
 import com.sr.epilepsyalarm.R
 import com.sr.epilepsyalarm.databinding.ActivityMainBinding
 import com.sr.epilepsyalarm.infrastructure.ButtonService
@@ -46,6 +45,7 @@ class MainActivity : AppCompatActivity() {
     private val ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE = 456
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lockedReceiver: LockedReceiver
+    private lateinit var notificationManager: NotificationManager
     private val mainViewModel: MainViewModel by viewModels()
     private val myViewModel: ConfigurationViewModel by viewModels()
     private val userViewModel: SignUpUserViewModel by viewModels()
@@ -74,21 +74,31 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         val headerView = navView.getHeaderView(0)
+        binding.groupLinear.setOnClickListener {
+            com.sr.epilepsyalarm.infrastructure.NotificationManager.showNotification(this)
+            finishAffinity()}
 
-// Ahora puedes obtener las vistas de la cabecera y establecer sus propiedades
         val usernameTextView: TextView = headerView.findViewById(R.id.textView)
        userViewModel.user.observe(this) {
            usernameTextView.text = it?.name ?: "new User"
        }
 
+
+
         initNotification()
         initListenBlockButton()
 
         lockedReceiver = LockedReceiver()
-        lockedReceiver.setPulseCount(intent.getIntExtra("passValue", 2))
         myViewModel.soundAlarm.observe(this) {
 
             mainViewModel.saveDouble(Constants.keySound, it.toDouble(),this)
+
+        }
+
+        myViewModel.isDashboardActivate.observe(this) {
+            if (it) {
+                mainViewModel.sendInitMessage()
+            }
 
         }
 
@@ -240,6 +250,8 @@ class MainActivity : AppCompatActivity() {
             checkNotificationPermission()
         }
     }
+
+
 
 
 }

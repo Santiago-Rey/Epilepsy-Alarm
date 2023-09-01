@@ -12,6 +12,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Epilepsy Alarm"
+rootProject.name = "EpilepsyAlarm"
 include ':app'
 include ':configuration'

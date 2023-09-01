@@ -26,8 +26,8 @@ object NotificationManager {
         context?.let {
             val builder = NotificationCompat.Builder(it, channelId)
                 .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle("Mensaje de emergencia")
-                .setContentText("Este es un mensaje de emergencia")
+                .setContentTitle("EPILEPSYALARM")
+                .setContentText("Toque para abrir la aplicacion")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
@@ -37,13 +37,7 @@ object NotificationManager {
                         Manifest.permission.POST_NOTIFICATIONS
                     ) != PackageManager.PERMISSION_GRANTED
                 ) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
+
                     return
                 }
                 notify(0, builder.build())
