@@ -1,22 +1,22 @@
 package com.sr.epilepsyalarm.infrastructure
 
-import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.graphics.PixelFormat
 import android.hardware.camera2.CameraManager
 import android.media.AudioManager
-import android.media.MediaPlayer
 import android.net.Uri
-import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.sr.epilepsyalarm.R
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.sr.configuration.data.SharedPreferenceDataSourceImpl
+import com.sr.configuration.infrastructure.actualLocationManager
 import com.sr.epilepsyalarm.data.repository.MessageRepository
 import com.sr.configuration.util.Constants.keySound
+import com.sr.configuration.util.MediaPlayerUtil.mediaPlayer
+import com.sr.configuration.util.MediaPlayerUtil.timer
 import com.sr.epilepsyalarm.view.BlockMessageActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,17 +25,19 @@ import java.util.*
 
 class LockedReceiver : BroadcastReceiver() {
 
-    private var pulseCount = 2
+    private var pulseCount = 3
     private var numClicks = 0
-    private var lastClickTime = 0L
+    private var lastClickTime : Long = 0L
     private lateinit var windowManager: WindowManager
     private lateinit var view: View
-    private val mediaPlayer = MediaPlayer()
-    private var timesAlarm=0
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private var timesAlarm = 0
 
     override fun onReceive(context: Context, intent: Intent?) {
-        if (intent?.action == Intent.ACTION_SCREEN_ON) {
-          timePulse(context)
+        if (intent?.action == Intent.ACTION_SCREEN_ON || intent?.action == Intent.ACTION_SCREEN_OFF) {
+            setPulseCount(context)
+
         }else{
             NotificationManager.clearNotification(context)
         }
@@ -44,46 +46,46 @@ class LockedReceiver : BroadcastReceiver() {
     private fun startFunction(context: Context) {
         val result = goAsync()
         val coroutineScope = CoroutineScope(Dispatchers.Default)
-        val activityIntent = Intent(context, BlockMessageActivity::class.java)
-        //activityIntent.putExtra("user_emergency", )
-        activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
-        // Iniciar la actividad
-        context!!.startActivity(activityIntent)
-
+        actualLocationManager.getActualLocation(fusedLocationClient){ location ->
+            coroutineScope.launch {
+                val messageRepository = MessageRepository()
+                messageRepository.saveLocation(context, location)
+            }
+        }
         coroutineScope.launch {
             val messageRepository = MessageRepository()
             messageRepository.sendMessage(context)
             messageRepository.sendSMS(context)
-            messageRepository.getUser()
-            result.finish()
+            val user = messageRepository.getUser()
+            val activityIntent = Intent(context, BlockMessageActivity::class.java)
+            activityIntent.putExtra("user_emergency", user)
+            activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            // Iniciar la actividad
+            context?.startActivity(activityIntent)
+            result?.finish()
         }
+
        // showMessage(context)
         NotificationManager.showNotification(context)
         startAlarm(context)
     }
 
-    /*fun showMessage(context: Context){
-
-        view = LayoutInflater.from(context).inflate(R.layout.message_notify, null)
-
-        windowManager = context.getSystemService(Service.WINDOW_SERVICE) as WindowManager
-        val layoutParams = WindowManager.LayoutParams(
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-            PixelFormat.TRANSLUCENT
-        )
-
-        windowManager.addView(view, layoutParams)
-    }*/
 
 
+    fun setPulseCount(context: Context) {
 
-    fun setPulseCount(option: Int) {
-        pulseCount = option // actualiza la variable numClicks con la opción seleccionada
-        lastClickTime = System.currentTimeMillis() // resetea el tiempo de la última pulsación
+        val result = goAsync()
+        val coroutineScope = CoroutineScope(Dispatchers.Default)
+
+        coroutineScope.launch {
+            val messageRepository = MessageRepository()
+            this@LockedReceiver.pulseCount = messageRepository.getPulseCount(context) // actualiza la variable numClicks con la opción seleccionada
+            timePulse(context)
+            result?.finish()
+        }
+
 
     }
 
@@ -94,22 +96,21 @@ class LockedReceiver : BroadcastReceiver() {
         if ((clickTime - lastClickTime) < 5000 ) {
             if (numClicks < pulseCount) {
                 numClicks++
-            } else if (numClicks == pulseCount) {
-                startFunction(context)
-                numClicks = 0
             }
-            //Menos de 2 segundos
-            numClicks ++
+
+            if (numClicks == pulseCount) {
+                startFunction(context)
+                lastClickTime = System.currentTimeMillis() // resetea el tiempo de la última pulsación
+                numClicks = 0
+                lastClickTime = 0L
+            }
+
 
         }else{
             numClicks = 1 //Reinicia el contador
         }
         lastClickTime = clickTime
-
-        if(numClicks == 3){
-            startFunction(context)
-            numClicks = 0
-        }
+        println(pulseCount.toString() + " numero de clicks: " + numClicks)
 
     }
 
@@ -146,7 +147,7 @@ class LockedReceiver : BroadcastReceiver() {
 
         val cameraManager = context.getSystemService(AppCompatActivity.CAMERA_SERVICE) as CameraManager
         val cameraId = cameraManager.cameraIdList[0]
-        val timer = Timer()
+        timer = Timer()
 
         timer.schedule(object : TimerTask() {
             override fun run() {
