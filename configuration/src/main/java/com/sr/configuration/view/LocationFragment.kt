@@ -1,10 +1,12 @@
 package com.sr.configuration.view
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
@@ -56,7 +58,9 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
 
         if (deniedPermissions.isNotEmpty()) {
             Toast.makeText(requireContext(), "Se necesita el permiso de ubicación para continuar", Toast.LENGTH_LONG).show()
-            requiredPermission()
+            requestLocationPermissions()
+
+
         }else{
             if (isLocationEnabled()) {
                 // La ubicación está activada en el dispositivo, puedes utilizar los servicios de ubicación aquí
@@ -71,15 +75,42 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    private fun requestLocationPermissions() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    showPermissionDeniedDialog()
+            // Explicar al usuario por qué la aplicación necesita los permisos
+            // Puedes mostrar un diálogo o una SnackBar con una explicación
+        } else {
+            ActivityCompat.requestPermissions(requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                1001)
+        }
+    }
+
+    private fun showPermissionDeniedDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Permiso necesario")
+            .setMessage("Esta aplicación necesita acceso a la ubicación para funcionar correctamente. " +
+                    "Por favor, activa los permisos en la configuración.")
+            .setPositiveButton("Abrir Configuración") { _, _ ->
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                val uri = Uri.fromParts("package", requireContext().packageName, null)
+                intent.data = uri
+                startActivity(intent)
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-
+        binding.nextBtn.setOnClickListener{
+           requireActivity().finishAffinity()
+        }
 
         requiredPermission()
-
-
-
         binding.mapView.onCreate(savedInstanceState)
         binding.mapView.getMapAsync(this)
     }
@@ -149,7 +180,6 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
         }
         actualLocationManager.getActualLocation(fusedLocationClient){location ->
 
-// En tu método de actualización de ubicación:
             val latLng = LatLng(location.first, location.second)
             if (currentLocationMarker == null) {
                 currentLocationMarker = googleMap.addMarker(MarkerOptions().position(latLng).title("Mi ubicación"))
