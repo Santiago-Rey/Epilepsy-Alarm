@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.isEmpty
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.sr.configuration.R
@@ -21,9 +22,11 @@ class SignUpUserFragment : Fragment() {
 
     private var _binding: FragmentSignUpUserBinding? = null
     private val viewModelSignUp: SignUpUserViewModel by viewModels()
+    private val myViewModel : ConfigurationViewModel by activityViewModels()
     private val binding get() = _binding!!
     private lateinit var spinner: Spinner
     private val items = arrayListOf("O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-")
+    private val itemDocumentType = arrayListOf("Tarjeta de identidad", "Cedula de ciudadania", "Cedula de extranjeria")
     private val letterFilter : LetterInputFilter? = null
 
 
@@ -36,44 +39,24 @@ class SignUpUserFragment : Fragment() {
         binding.viewModel = viewModelSignUp
         binding.lifecycleOwner = viewLifecycleOwner
         val view = binding.root
-
-        val editText: EditText = binding.etName
-        val editText1: EditText = binding.etLastName
-        val editNumber: EditText = binding.etPhoneContact
-
-        if (editText != null && editText1 != null) {
-            editText.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
-                val regex = Regex("[a-zA-Z]+")
-                if (regex.containsMatchIn(source)) {
-                    source
-                } else {
-                    ""
-                }
-            })
-        }
-        editNumber.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
-            val regex = Regex("\\d")
-            if (regex.containsMatchIn(source)) {
-                source
-            } else {
-                ""
-            }
-        })
-
-
-
         return view
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.run {
             val adapter =
                 ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, items)
             spinner.adapter = adapter
 
-          /*  spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            val adapter1 =
+                ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, itemDocumentType)
+            spinnerDT.adapter = adapter1
+
+
+            /*spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
                     view: View?,
@@ -81,6 +64,7 @@ class SignUpUserFragment : Fragment() {
                     id: Long
                 ) {
                     val selectedItem = parent?.getItemAtPosition(position).toString()
+
                     Toast.makeText(
                         requireContext(),
                         "Seleccionaste $selectedItem",
@@ -92,17 +76,29 @@ class SignUpUserFragment : Fragment() {
                     // no hace nada
                 }
             }*/
+
             viewModelSignUp.obtainUser()
             setUpButton()
-        }
 
+            lifecycleOwner?.let {
+                viewModelSignUp.user.observe(it) {user ->
+                    if(user != null){
+                        spinner.setSelection(items.indexOf(user.blood))
+                        spinnerDT.setSelection(itemDocumentType.indexOf(user.documentType))
+                    }
+                }
+            }
+        }
     }
 
     private fun setUpButton() {
         binding.nextBtn.setOnClickListener { sendUser() }
 
-        if (findNavController().graph.id != R.id.navigation_graph)
+        if (findNavController().graph.id != R.id.navigation_graph){
             binding.nextBtn.text = "Guardar"
+        }
+
+
     }
 
     fun sendUser() {
@@ -111,12 +107,16 @@ class SignUpUserFragment : Fragment() {
                 binding.etName.text.toString(),
                 binding.etLastName.text.toString(),
                 binding.spinner.selectedItem as String,
+                binding.spinnerDT.selectedItem as String,
                 binding.etNumId.text.toString(),
                 binding.etNameContact.text.toString(),
                 binding.etPhoneContact.text.toString()
             )
             if (findNavController().graph.id ==  R.id.navigation_graph)
                 findNavController().navigate(R.id.action_signUpUser_to_configFragment)
+            else{
+                myViewModel.isDashboardActivate.value = true
+            }
         } else {
             Toast.makeText(requireContext(), "Necesita llenar todos los campos", Toast.LENGTH_LONG)
                 .show()

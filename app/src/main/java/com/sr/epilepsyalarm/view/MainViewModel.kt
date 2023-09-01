@@ -32,7 +32,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun readConfiguration(context:Context){
-      isFirstLogin.value = getBoolean("first_login", false,context)
+      isFirstLogin.value = getBoolean("first_login_", false,context)
     }
 
     fun saveDouble(key: String, value: Double, context:Context){

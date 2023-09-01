@@ -8,13 +8,13 @@ class UserUseCase {
 
     suspend fun createUser(userModel: UserModel){
         userModel.run {
-            UserApp.db.userDao().insert( User(1, name, lastName, blood, userId, nameEmergency, numberEmergency, messageAlert))
+            UserApp.db.userDao().insert( User(1, name, lastName, blood, documentType, userId, nameEmergency, numberEmergency, messageAlert, messageInstruction))
         }
     }
 
     suspend fun getUser(): UserModel? {
        val user = UserApp.db.userDao().getUser(1)
-        return user?.run { UserModel(1, name, lastName, blood, userId, nameEmergency, numberEmergency, messageAlert) }
+        return user?.run { UserModel(1, name, lastName, blood, documentType, userId, nameEmergency, numberEmergency, messageAlert, messageInstruction) }
     }
 
 

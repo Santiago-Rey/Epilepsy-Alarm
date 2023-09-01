@@ -10,8 +10,10 @@ data class User(
     val name: String,
     val lastName: String,
     val blood: String,
+    val documentType : String,
     val userId: String,
     val nameEmergency: String,
     val numberEmergency: String,
-    val messageAlert: String
+    val messageAlert: String,
+    val messageInstruction:String
 )

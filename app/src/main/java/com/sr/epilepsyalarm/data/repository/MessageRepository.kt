@@ -7,6 +7,7 @@ import com.sr.configuration.domain.UserUseCase
 import com.sr.configuration.data.SharedPreferenceDataSourceImpl
 import com.sr.configuration.domain.PreferenceUseCase
 import com.sr.configuration.domain.UserModel
+import com.sr.configuration.util.Constants.keyPulse
 import com.sr.epilepsyalarm.data.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -20,7 +21,9 @@ class MessageRepository {
                 "individual",
                 "57${getPhone()}",
                 "text",
-                Text(true, getMessage() + " \n mi ubicación es esta : " + getLocation(context))
+                Text(true, getMessage() + " \n Mi ubicación es esta : " + getLocation(
+                    context
+                ))
             )
         )
     }
@@ -40,7 +43,7 @@ class MessageRepository {
 
     suspend fun sendSMS(context: Context) {
         val smsManager = SmsManager.getDefault()
-        smsManager.sendTextMessage(getPhone(), null, getMessage() + "\n Mi ubicacion es esta: " + getLocation(context), null, null)
+        smsManager.sendTextMessage(getPhone(), null, getMessage() + "\n Mi ultima ubicacion es esta: " + getLocation(context), null, null)
     }
 
     private fun getRetrofit(): Retrofit {
@@ -50,7 +53,7 @@ class MessageRepository {
                 val original = chain.request()
 
                 val request = original.newBuilder()
-                    .header("Authorization", "Bearer EAAKt4SA1Vy0BAAZCbxpLP2mGujGmZAVPvbogXI5NPFDhpQZAX723O0uZBmXrZAqtAwybZCxlTZBYvKCJMMcaPOflUQQ7ipVpOae9EpiVPL992Cw6CxrDPtJ2nZAfMH4V52lwcFBraWBS49akVKa8ZAyZC2ZByLyDw3k9WyXfWvn87VL4zSlPr7ZAyJUe")
+                    .header("Authorization", "Bearer EAAKt4SA1Vy0BALD4LQ4f5HYjaQ8OvhUV5J10ZAEHWSugdgIdh32OfBAYiZAZAPnNMo7tjdEfiKwwDJ1Nt6K1hVfBQsIWhpNPtXNknYSEnVNFpd1ioYbJ8gM2JeIfg1yYbwqUWjrZAZCFhwcEqRt0k2pgZBrfw73S4LZC7gdyO4QggVECftBScTAJ54xIb7aZBXAcoEEbBRzZCMQd4jGQMu6qnF7HgGuLBRLcZD")
                     .method(original.method(), original.body())
                     .build()
 
@@ -75,12 +78,30 @@ class MessageRepository {
     }
 
     private fun getLocation(context: Context): String {
+
         val sharedPrefsRepository = SharedPrefsRepositoryImpl(SharedPreferenceDataSourceImpl(context))
         val preferenceUseCase = PreferenceUseCase(sharedPrefsRepository)
-        val latitude = preferenceUseCase.getPreference("latitude", 0.0).toString()
-        val longitude = preferenceUseCase.getPreference("longitude", 0.0).toString()
+        val latitude = preferenceUseCase.getPreference("latitude", 0.0)
+        val longitude = preferenceUseCase.getPreference("longitude", 0.0)
+
 
         return "https://www.google.com/maps/place/$latitude,$longitude"
+
+    }
+
+    fun saveLocation(context: Context, location: Pair<Double, Double>) {
+
+        val sharedPrefsRepository = SharedPrefsRepositoryImpl(SharedPreferenceDataSourceImpl(context))
+        val preferenceUseCase = PreferenceUseCase(sharedPrefsRepository)
+        preferenceUseCase.savePreference("latitude", location.first)
+        preferenceUseCase.savePreference("longitude", location.second)
+
+    }
+
+    fun getPulseCount(context: Context): Int {
+        val sharedPrefsRepository = SharedPrefsRepositoryImpl(SharedPreferenceDataSourceImpl(context))
+        val preferenceUseCase = PreferenceUseCase(sharedPrefsRepository)
+        return preferenceUseCase.getPreference(keyPulse, 2)
 
     }
 

@@ -20,4 +20,12 @@ class SharedPrefsRepositoryImpl(private val sharedPreferenceDataSource: SharedPr
     override fun getDouble(key: String, value: Double): Double {
         return sharedPreferenceDataSource.getDouble(key, value)
     }
+
+    override fun saveInt(key: String, value: Int) {
+        sharedPreferenceDataSource.saveInt(key, value)
+    }
+
+    override fun getInt(key: String, value: Int): Int {
+        return sharedPreferenceDataSource.getInt(key, value)
+    }
 }

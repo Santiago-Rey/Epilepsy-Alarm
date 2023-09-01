@@ -21,4 +21,13 @@ class PreferenceUseCase (private val sharedPrefsRepository: SharedPrefsRepositor
         return sharedPrefsRepository.getDouble(key, value)
 
     }
+
+    fun savePreference(key: String, value: Int) {
+        sharedPrefsRepository.saveInt(key, value)
+    }
+
+    fun getPreference(key: String, value: Int): Int{
+        return sharedPrefsRepository.getInt(key, value)
+
+    }
 }

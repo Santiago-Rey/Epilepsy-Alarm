@@ -30,4 +30,14 @@ class SharedPreferenceDataSourceImpl(context: Context) {
         return sharedPreferences.getString(key, defaultValue.toString())?.toDouble() ?: 0.0
     }
 
+    fun saveInt(key: String, value: Int) {
+        val editor = sharedPreferences.edit()
+        editor.putInt(key, value)
+        editor.apply()
+    }
+
+    fun getInt(key: String, defaultValue: Int): Int {
+        return sharedPreferences.getInt(key, defaultValue)
+    }
+
 }
