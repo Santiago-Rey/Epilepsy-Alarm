@@ -17,6 +17,7 @@ class BlockMessageActivity : AppCompatActivity() {
 //    val textView: TextView = findViewById(R.id.textView)
 
     private lateinit var mensaje: TextView
+    private lateinit var addInstruction : TextView
     private lateinit var dataTV: TextView
     private lateinit var lastaNameTV: TextView
     private lateinit var rHTV: TextView
@@ -31,11 +32,13 @@ class BlockMessageActivity : AppCompatActivity() {
             intent.getParcelableExtra<UserModel>("user_emergency")
         }
         mensaje = findViewById(R.id.mensaje)
+        addInstruction = findViewById(R.id.instructionTV)
         dataTV = findViewById(R.id.nameUserTV)
         lastaNameTV = findViewById(R.id.lastNameTV)
         rHTV = findViewById(R.id.rHTV)
         nameEmergencyTV = findViewById(R.id.nameEmergencyTV)
         numberEmergencyTV = findViewById(R.id.phoneEmergencyTV)
+        addInstruction.text = ("- INSTRUCCIONES ADICIONALES \n "+ userData?.messageInstruction + "\n\n" + "- DATOS DEL USUARIO")
         dataTV.text = ("Nombre paciente: " + userData?.name) ?: "Nombre usuario"
         lastaNameTV.text = (" " + userData?.lastName) ?: "Apellido usuario"
         rHTV.text = ("Tipo de sangre: " + userData?.blood) ?: "rH usuario"
@@ -56,8 +59,7 @@ class BlockMessageActivity : AppCompatActivity() {
                 " - Observar detenidamente la crisis para poder describirla al personal de salud.\n" +
                 " - Medir el tiempo.\n" +
                 " - Tranquilizar a la persona cuando se recupere.\n" +
-                " - Ayudarle a orientarse. \n\n " +
-                " DATOS DEL USUARIO. \n "
+                " - Ayudarle a orientarse. \n\n "
 
         mensaje.text = instrucciones
         val stopButton = findViewById<Button>(R.id.stopButton)
