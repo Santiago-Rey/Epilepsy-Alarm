@@ -7,7 +7,7 @@ import com.sr.configuration.data.User
 
 @Database(
     entities = [User::class],
-    version = 1
+    version = 3
 )
 abstract class UserDataBase:  RoomDatabase() {
     abstract fun userDao(): UserDao
