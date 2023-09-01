@@ -6,72 +6,102 @@
     android:layout_height="match_parent"
     tools:context=".view.BlockMessageActivity">
 
-    <TextView
-        android:id="@+id/mensaje"
+    <ScrollView
+        android:id="@+id/scrollText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text=" Mensaje de alerta"
-        android:textColor="@android:color/white"
-        android:textSize="20sp">
+        app:layout_constraintBottom_toTopOf="@id/stopButton">
 
-    </TextView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top">
+            <TextView
+                android:id="@+id/mensaje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text=" Mensaje de alerta"
+                android:textColor="@android:color/white"
+                android:textSize="20sp">
 
-    <TextView
-        android:id="@+id/nameUserTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/mensaje"
-        android:text=" Mensaje de alerta"
-        android:textColor="@android:color/white"
-        android:textSize="20sp">
+            </TextView>
 
-    </TextView>
+            <TextView
+                android:id="@+id/instructionTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mensaje"
+                android:text=" Mensaje de alerta"
+                android:textColor="@android:color/white"
+                android:textSize="20sp">
 
-    <TextView
-        android:id="@+id/lastNameTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@+id/nameUserTV"
-        app:layout_constraintStart_toEndOf="@+id/nameUserTV"
-        android:text=" Mensaje de alerta"
-        android:textColor="@android:color/white"
-        android:textSize="20sp">
+            </TextView>
 
-    </TextView>
+            <TextView
+                android:id="@+id/nameUserTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/instructionTV"
+                android:text=" Mensaje de alerta"
+                android:textColor="@android:color/white"
+                android:textSize="20sp">
 
-    <TextView
-        android:id="@+id/rHTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/lastNameTV"
-        android:text=" Mensaje de alerta"
-        android:textColor="@android:color/white"
-        android:textSize="20sp">
+            </TextView>
 
-    </TextView>
+            <TextView
+                android:id="@+id/lastNameTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/nameUserTV"
+                app:layout_constraintStart_toEndOf="@+id/nameUserTV"
+                android:text=" Mensaje de alerta"
+                android:textColor="@android:color/white"
+                android:textSize="20sp">
 
-    <TextView
-        android:id="@+id/nameEmergencyTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/rHTV"
-        android:text=" Mensaje de alerta"
-        android:textColor="@android:color/white"
-        android:textSize="20sp">
+            </TextView>
 
-    </TextView>
+            <TextView
+                android:id="@+id/rHTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/lastNameTV"
+                android:text=" Mensaje de alerta"
+                android:textColor="@android:color/white"
+                android:textSize="20sp">
 
-    <TextView
-        android:id="@+id/phoneEmergencyTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/nameEmergencyTV"
-        android:text=" Mensaje de alerta"
-        android:textColor="@android:color/white"
-        android:textSize="20sp">
+            </TextView>
 
-    </TextView>
+            <TextView
+                android:id="@+id/nameEmergencyTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/rHTV"
+                android:text=" Mensaje de alerta"
+                android:textColor="@android:color/white"
+                android:textSize="20sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/phoneEmergencyTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/nameEmergencyTV"
+                android:text=" Mensaje de alerta"
+                android:textColor="@android:color/white"
+                android:textSize="20sp">
+
+            </TextView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
 
 
     <Button
@@ -81,6 +111,7 @@
         android:background="@drawable/round_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollText"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="20dp"
         android:text="Stop"
