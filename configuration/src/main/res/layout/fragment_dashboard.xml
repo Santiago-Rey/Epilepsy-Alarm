@@ -12,9 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="15sp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/editTextMessage"
         android:layout_marginTop="16dp"
         android:text="Mensaje de alerta" />
 
@@ -23,12 +24,14 @@
         android:id="@+id/editTextMessage"
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:hint="Escribe el mensaje"
+        android:hint=" Escribe el mensaje"
+        android:layout_marginStart="20dp"
+        android:textAlignment="2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/edittext_border"
         app:layout_constraintTop_toBottomOf="@+id/alertTextView"
-        android:layout_marginEnd="50dp"/>
+        android:layout_marginEnd="20dp"/>
 
 
     <Button
@@ -47,6 +50,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/edit_button"
         android:textSize="18sp"
+        android:textStyle="bold"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +72,42 @@
             android:background="@drawable/edittext_border"/>
 
     </ScrollView>
-    <!-- Edittext -->
+
+
+    <TextView
+        android:id="@+id/addTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="@+id/scrollInstructions"
+        app:layout_constraintTop_toBottomOf="@id/scrollInstructions"
+        android:layout_marginTop="16dp"
+        android:text="Agregar instrucciones adicionales" />
+
+
+    <EditText
+        android:id="@+id/addTextMessage"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:hint=" Escribe nuevas instrucciones"
+        app:layout_constraintStart_toStartOf="@+id/scrollInstructions"
+        android:layout_marginStart="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/edittext_border"
+        app:layout_constraintTop_toBottomOf="@+id/addTextView"
+        android:layout_marginEnd="20dp"/>
+
+    <Button
+        android:id="@+id/edit_button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/addTextMessage"
+        android:layout_alignParentEnd="true"
+        app:layout_constraintTop_toBottomOf="@+id/addTextMessage"
+        android:text="Guardar instrucciones" />
 
 
     <TextView
@@ -79,25 +118,20 @@
         android:text="Sonido de alarma"
         android:textColor="@color/black"
         android:textSize="18sp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scrollInstructions" />
+        app:layout_constraintTop_toBottomOf="@+id/addTextMessage" />
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/alarmSpinnerConfig"
-        app:layout_constraintTop_toBottomOf="@+id/alarmSoundTv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-
-    <Button
-        android:id="@+id/stopButton"
+    <TextView
+        android:id="@+id/alarmSoundTv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/alarmSpinnerConfig"
-       app:layout_constraintStart_toStartOf="parent"
-        android:text="Detener"
         android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true"/>
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollInstructions" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

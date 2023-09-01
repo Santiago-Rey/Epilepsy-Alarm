@@ -34,7 +34,9 @@
             android:layout_marginTop="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginEnd="10dp"
+            android:textSize="15sp"
             android:text="Nombre"
+            android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/tvSignIn" />
 
         <EditText
@@ -43,7 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginEnd="10dp"
-            android:inputType="textPersonName"
+            android:inputType="textAutoComplete"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ áéíóú"
             app:layout_constraintTop_toBottomOf="@id/tv_name"
             android:text="@{viewModel.user.name}"
             android:required = "true"/>
@@ -55,6 +58,8 @@
             android:layout_marginLeft="15dp"
             android:layout_marginEnd="10dp"
             android:text="Apellido"
+            android:textSize="15sp"
+            android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/et_name" />
 
         <EditText
@@ -63,7 +68,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginEnd="10dp"
-            android:inputType="textPersonName"
+            android:inputType="textAutoComplete"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ áéíóú"
             app:layout_constraintTop_toBottomOf="@id/tv_last_name"
             android:text="@{viewModel.user.lastName}"
             android:required = "true"/>
@@ -74,7 +80,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginEnd="10dp"
+            android:textSize="15sp"
             android:text="Tipo de sangre"
+            android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/et_last_name" />
 
 
@@ -87,14 +95,38 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:required = "true"/>
 
+
+        <TextView
+            android:id="@+id/tv_dt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginEnd="10dp"
+            android:textSize="15sp"
+            android:text="Tipo de documento"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+
+        <Spinner
+            android:id="@+id/spinnerDT"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_dt"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:required = "true"/>
+
         <TextView
             android:id="@+id/tv_numId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginEnd="10dp"
+            android:textSize="15sp"
             android:text="Número de documento de identidad"
-            app:layout_constraintTop_toBottomOf="@id/spinner" />
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/spinnerDT" />
 
         <EditText
             android:id="@+id/et_numId"
@@ -103,6 +135,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginEnd="10dp"
             android:inputType="number"
+            android:maxLength="10"
             app:layout_constraintTop_toBottomOf="@id/tv_numId"
             android:text="@{viewModel.user.userId}"
             android:required = "true"/>
@@ -113,7 +146,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginEnd="10dp"
+            android:textSize="15sp"
             android:text="Nombre Contacto de Emergencia"
+            android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/et_numId" />
 
         <EditText
@@ -122,6 +157,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginEnd="10dp"
+            android:inputType="textAutoComplete"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ áéíóú"
             app:layout_constraintTop_toBottomOf="@id/tv_nameContact"
             android:text="@{viewModel.user.nameEmergency}"
             android:required = "true"/>
@@ -132,7 +169,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginEnd="10dp"
+            android:textSize="15sp"
             android:text="Número contacto de emergencia"
+            android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/et_nameContact" />
 
         <EditText
@@ -141,7 +180,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginEnd="10dp"
-            android:inputType="phone"
+            android:inputType="number"
+            android:maxLength="10"
             app:layout_constraintTop_toBottomOf="@id/tv_phoneContac"
             tools:layout_editor_absoluteX="16dp"
             android:text="@{viewModel.user.numberEmergency}"

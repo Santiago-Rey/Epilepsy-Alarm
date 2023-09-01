@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.UserManualFragment">
+
+    <ScrollView
+        android:id="@+id/scrollText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Información sobre la aplicación"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Aquí verá una pequeña información sobre el manejo de las siguientes opciones del menú:"
+                android:layout_marginStart="10dp"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+            <TextView
+                android:id="@+id/tvTitleDashboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="- DASHBOARD"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvText" />
+            <TextView
+                android:id="@+id/tvDashboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" El Dashboard es la pantalla principal de la aplicación, en donde puedes configurar tu mensaje de alerta y agregar instrucciones adicionales. Además en la esquina superior izquierda de la pantalla principal, puedes encontrar un menú desplegable con las siguientes opciones: \n\n - Dashboard \n - Configuracion \n - Perfil del usuario\n - Salir de la aplicacion\n"
+                android:layout_marginStart="10dp"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitleDashboard" />
+
+            <TextView
+                android:id="@+id/tvTitleConfiguration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="- CONFIGURACIÓN"
+                android:textSize="24sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDashboard" />
+
+            <TextView
+                android:id="@+id/tvConfiguration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" En esta pantalla puedes cambiar el tono de alarma de la alerta y la cantidad de veces que deseas oprimir el botón para que puede activar la alerta\n"
+                android:layout_marginStart="10dp"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitleConfiguration" />
+
+            <TextView
+                android:id="@+id/tvTitleUserProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="- PERFIL DE USUARIO"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvConfiguration" />
+
+            <TextView
+                android:id="@+id/tvUserProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" En esta pantalla puedes configurar tu información y la del contacto de confianza "
+                android:layout_marginStart="10dp"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitleUserProfile" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

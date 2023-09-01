@@ -21,31 +21,41 @@
         android:id="@+id/tvActionAlert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="El botón de bloqueo del dispositivo es el que\n                      activará la alerta"
-        app:layout_constraintTop_toBottomOf="@id/tvConfig"
         android:layout_marginStart="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"
-        android:textSize="19sp"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:text="El botón de bloqueo del dispositivo es el \n que activará la alerta"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvConfig" />
 
-    <TextView
-        android:id="@+id/rbActionAlert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Botón de bloqueo"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/tvActionAlert"
-        app:layout_constraintStart_toStartOf="@id/tvActionAlert"/>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="131dp"
+        android:layout_marginStart="16dp"
+        android:paddingTop="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvActionAlert"
+        app:srcCompat="@drawable/boton" />
+
+
 
     <TextView
         android:id="@+id/tvTimeActionAlert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Seleccione la cantidad de veces para presionar el botón"
-        app:layout_constraintTop_toBottomOf="@id/rbActionAlert"
+        android:text="Seleccione la cantidad de veces que \n va a enceder y apagar la pantalla mediante \n el botón de bloqueo"
+        app:layout_constraintTop_toBottomOf="@id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <RadioGroup
@@ -72,15 +82,28 @@
     </RadioGroup>
 
 
+    <TextView
+        android:id="@+id/tvNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AVISO! \n        Recuerde que debe hacerlo en un lapso \n                máximo de 5 segundos"
+        app:layout_constraintTop_toBottomOf="@id/rGButton"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/tvSoundAlert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Seleccione el sonido de la alarma"
-        app:layout_constraintTop_toBottomOf="@id/rGButton"
+        app:layout_constraintTop_toBottomOf="@+id/tvNote"
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatSpinner
