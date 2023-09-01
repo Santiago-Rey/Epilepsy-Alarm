@@ -8,6 +8,4 @@ class ConfigurationViewModel: ViewModel() {
     var isDashboardActivate : MutableLiveData<Boolean> = MutableLiveData(false)
     var soundAlarm : MutableLiveData<Int> = MutableLiveData()
 
-
-
 }

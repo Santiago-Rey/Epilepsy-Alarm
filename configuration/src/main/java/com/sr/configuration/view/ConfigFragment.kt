@@ -1,7 +1,5 @@
 package com.sr.configuration.view
 
-import android.hardware.camera2.CameraManager
-import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
@@ -9,22 +7,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.RadioGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.sr.configuration.R
 import com.sr.configuration.databinding.FragmentConfigBinding
-import com.sr.configuration.util.IOptionSelectListener
 import java.util.*
 
 
-class ConfigFragment : Fragment(), IOptionSelectListener {
+class ConfigFragment : Fragment() {
 
     private var _binding: FragmentConfigBinding? = null
     private val myViewModel: ConfigurationViewModel by activityViewModels()
@@ -62,8 +55,15 @@ class ConfigFragment : Fragment(), IOptionSelectListener {
             binding.nextBtn.setOnClickListener {
                 findNavController().navigate(R.id.action_configFragment_to_locationFragment)
             }
+        var timeAlert = 0
+        pulseCount = mainViewModel.getPulseCount(requireContext())
+        when (pulseCount) {
+            2 -> timeAlert = R.id.rbTimeActionAlert
+            3 -> timeAlert = R.id.rbTimeActionAlert1
 
-
+            else -> throw IllegalArgumentException("Invalid option selected")
+        }
+        radioGroup.check(timeAlert)
         radioGroup.setOnCheckedChangeListener { _, checkId ->
 
             when (checkId) {
@@ -72,9 +72,7 @@ class ConfigFragment : Fragment(), IOptionSelectListener {
                 else -> throw IllegalArgumentException("Invalid option selected")
             }
 
-            if (activity is IOptionSelectListener) {
-                (activity as IOptionSelectListener).onOptionSelected(pulseCount)
-            }
+            mainViewModel.savePulseCount(requireContext(), pulseCount)
 
 
         }
@@ -91,19 +89,15 @@ class ConfigFragment : Fragment(), IOptionSelectListener {
         val selectMusicSpinner = binding.alarmSpinner
         //UpMaxVolume()
         //flashOn()
-
-
-
         val adapter = ArrayAdapter(
             requireContext(),
-            android.R.layout.simple_spinner_item,
-            listOf("Predeterminado") + audioResources.map { it.key })
+            android.R.layout.simple_spinner_item, audioResources.map { it.key })
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         selectMusicSpinner.adapter = adapter
         val position = audioResources.keys.indexOfFirst {
             audioResources[it] == mainViewModel.getAlarm(requireContext())
         }
-        selectMusicSpinner.setSelection(position + 1)
+        selectMusicSpinner.setSelection(position)
 
         binding.stopButton.setOnClickListener {
             stopAlarm()
@@ -114,28 +108,23 @@ class ConfigFragment : Fragment(), IOptionSelectListener {
         }
 
     }
-
-    override fun onOptionSelected(option: Int) {
-        pulseCount = option
-    }
-
     private fun playAlarm(){
         val selectMusicSpinner = binding.alarmSpinner
         val position = selectMusicSpinner.selectedItemPosition
 
-        if (position != 0) {
-            val audioResource = audioResources.toList().get(position-1).second
-            val audioUri =
-                Uri.parse("android.resource://${requireActivity().packageName}/${audioResource}")
-            mediaPlayer.apply {
-                reset()
-                setDataSource(requireContext(), audioUri)
-                prepare()
-                start()
-            }
-            myViewModel.soundAlarm.value = audioResource
 
+        val audioResource = audioResources.toList().get(position).second
+        val audioUri =
+            Uri.parse("android.resource://${requireActivity().packageName}/${audioResource}")
+        mediaPlayer.apply {
+            reset()
+            setDataSource(requireContext(), audioUri)
+            prepare()
+            start()
         }
+        myViewModel.soundAlarm.value = audioResource
+
+
 
         binding.playButton.visibility = View.GONE
         binding.stopButton.visibility = View.VISIBLE
