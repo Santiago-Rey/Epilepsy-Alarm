@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -27,9 +28,18 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setObserver()
         mainViewModel.getMessageAlert()
-
         binding.editButton.setOnClickListener {
             mainViewModel.setMessageAlert(binding.editTextMessage.text.toString())
+            if(binding.editTextMessage != null){
+                Toast.makeText(requireContext(), "Mensaje guardado", Toast.LENGTH_SHORT).show()
+            }
+        }
+        mainViewModel.getMessageInstruction()
+        binding.editButton1.setOnClickListener {
+            mainViewModel.setMessageInstruction(binding.addTextMessage .text.toString())
+            if(binding.addTextMessage != null){
+                Toast.makeText(requireContext(), "Se agregaron instrucciones", Toast.LENGTH_SHORT).show()
+            }
         }
         val textView = binding.instructionsEdittext
 
@@ -49,7 +59,7 @@ class DashboardFragment : Fragment() {
 
         textView.text = instrucciones
 
-        setAlarm()
+       // setAlarm()
     }
 
     override fun onCreateView(
@@ -66,9 +76,14 @@ class DashboardFragment : Fragment() {
         mainViewModel.messageAlert.observe(viewLifecycleOwner) {
             binding.editTextMessage.setText(it)
         }
+
+        mainViewModel.addInstruction.observe(viewLifecycleOwner) {
+            binding.addTextMessage.setText(it)
+        }
     }
 
-    private fun setAlarm(){
+
+    /*private fun setAlarm(){
         val selectMusicSpinner = binding.alarmSpinnerConfig
 
         val stopButton = binding.stopButton
@@ -82,7 +97,7 @@ class DashboardFragment : Fragment() {
         val adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
-            listOf("Predeterminado")+audioResources.map { it.key })
+            listOf("Predeterminado") + audioResources.map { it.key })
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         selectMusicSpinner.adapter = adapter
         val position = audioResources.keys.indexOfFirst {
@@ -115,22 +130,7 @@ class DashboardFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
-        // Escuchar clic en botón de detener
-        stopButton.setOnClickListener {
-            stopAlarm()
-        }
 
-
-    }
-    private fun stopAlarm() {
-        // Detener la alarma si está sonando
-        if (mediaPlayer.isPlaying) {
-            mediaPlayer.stop()
-        }
-
-        // Mostrar botón de reproducir y ocultar botón de detener
-        binding.stopButton.visibility = View.GONE
-    }
-
+    }*/
 
 }
