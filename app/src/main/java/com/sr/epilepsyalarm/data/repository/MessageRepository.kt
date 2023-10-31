@@ -53,7 +53,7 @@ class MessageRepository {
                 val original = chain.request()
 
                 val request = original.newBuilder()
-                    .header("Authorization", "Bearer EAAKt4SA1Vy0BALD4LQ4f5HYjaQ8OvhUV5J10ZAEHWSugdgIdh32OfBAYiZAZAPnNMo7tjdEfiKwwDJ1Nt6K1hVfBQsIWhpNPtXNknYSEnVNFpd1ioYbJ8gM2JeIfg1yYbwqUWjrZAZCFhwcEqRt0k2pgZBrfw73S4LZC7gdyO4QggVECftBScTAJ54xIb7aZBXAcoEEbBRzZCMQd4jGQMu6qnF7HgGuLBRLcZD")
+                    .header("Authorization", "Bearer EAAKt4SA1Vy0BO2yD2au21FdDMbLlbdm7C4LwzJTAroZCxaVbB9DMQRrkgyB6vk5Qbv6abZBwjh9JCB5gw2ayvZCj9eXZCmEMZAywjqhEIlDJwqbFDXYrs2YuIWQfwkgOXmQ3GgJmKZAIRDVXwKEdnYkIRiyRgQlOVkLwZBcKaLskucSe5llCN5oLV2Wj51YS5Ox")
                     .method(original.method(), original.body())
                     .build()
 
