@@ -23,11 +23,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EpilepsyAlarm">
         <activity
+            android:name=".view.TempActivity"
+            android:noHistory="true"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:showWhenLocked="true"
+            android:theme="@style/FullScreen" />
+
+        <activity
             android:name=".view.BlockMessageActivity"
             android:exported="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
             android:showWhenLocked="true"
-            android:theme="@style/FullScreen"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/FullScreen" />
+
 
         <service android:name=".infrastructure.ButtonService" />
 
@@ -44,8 +54,8 @@
             android:name=".view.MainActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/Theme.EpilepsyAlarm.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.EpilepsyAlarm.NoActionBar" />
         <activity
             android:name=".view.InitActivity"
             android:exported="true"
