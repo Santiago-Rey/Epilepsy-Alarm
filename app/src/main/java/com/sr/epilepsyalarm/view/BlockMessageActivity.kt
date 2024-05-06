@@ -23,6 +23,8 @@ class BlockMessageActivity : AppCompatActivity() {
     private lateinit var rHTV: TextView
     private lateinit var nameEmergencyTV: TextView
     private lateinit var numberEmergencyTV: TextView
+
+    private var pushCount = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_block_message)
@@ -64,9 +66,21 @@ class BlockMessageActivity : AppCompatActivity() {
         mensaje.text = instrucciones
         val stopButton = findViewById<Button>(R.id.stopButton)
         stopButton.setOnClickListener {
-            stopAlarm()
-            flashOff()
-            finish()
+
+            pushCount++
+
+
+            when (pushCount){
+                1 -> {
+                    stopAlarm()
+                    flashOff()
+                }
+                2-> finishAndRemoveTask()
+            }
+
+           if(pushCount == 2){
+               pushCount = 0
+           }
 
         }
     }
@@ -86,4 +100,6 @@ class BlockMessageActivity : AppCompatActivity() {
         }
 
     }
+
+
 }
