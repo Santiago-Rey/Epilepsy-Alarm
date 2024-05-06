@@ -110,6 +110,7 @@ class SignUpUserFragment : Fragment() {
                 binding.spinnerDT.selectedItem as String,
                 binding.etNumId.text.toString(),
                 binding.etNameContact.text.toString(),
+                binding.etPhoneCountry.text.toString(),
                 binding.etPhoneContact.text.toString()
             )
             if (findNavController().graph.id ==  R.id.navigation_graph)

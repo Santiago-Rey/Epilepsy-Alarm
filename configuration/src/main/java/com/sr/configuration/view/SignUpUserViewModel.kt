@@ -22,9 +22,10 @@ class SignUpUserViewModel: ViewModel() {
         etDT: String,
         etNumId: String,
         etNameContact: String,
+        etCountryNumber : String,
         etPhoneContact: String
     ) {
-        _user.value = UserModel(1, etName, etLastName, etRh, etDT, etNumId, etNameContact, etPhoneContact)
+        _user.value = UserModel(1, etName, etLastName, etRh, etDT, etNumId, etNameContact, etCountryNumber, etPhoneContact)
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 _user.value?.let { userUseCase.createUser(it) }
