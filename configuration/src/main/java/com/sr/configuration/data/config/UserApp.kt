@@ -14,6 +14,7 @@ class UserApp: Application() {
             this,
             UserDataBase::class.java,
             "userDataBase"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
+
     }
 }

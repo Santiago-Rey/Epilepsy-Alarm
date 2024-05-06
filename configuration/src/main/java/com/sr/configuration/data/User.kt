@@ -13,6 +13,7 @@ data class User(
     val documentType : String,
     val userId: String,
     val nameEmergency: String,
+    val countryNumber : String,
     val numberEmergency: String,
     val messageAlert: String,
     val messageInstruction:String

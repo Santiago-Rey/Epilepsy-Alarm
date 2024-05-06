@@ -12,6 +12,7 @@ data class UserModel(
     val documentType: String,
     val userId: String,
     val nameEmergency: String,
+    val countryNumber: String,
     val numberEmergency: String,
     var messageAlert: String = "",
     var messageInstruction : String = "") : Parcelable
