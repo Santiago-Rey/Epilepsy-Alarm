@@ -19,7 +19,7 @@ class MessageRepository {
         getRetrofit().create(MessageApi::class.java).postMessage(
             MessageEntity("whatsapp",
                 "individual",
-                "57${getPhone()}",
+                "${getIndicative()}${getPhone()}",
                 "text",
                 Text(true, getMessage() + " \n Mi ubicación es esta : " + getLocation(
                     context
@@ -32,7 +32,7 @@ class MessageRepository {
         getRetrofit().create(MessageApi::class.java).postMessage(
             MessageEntity("whatsapp",
                 null,
-                "57${getPhone()}",
+                "${getIndicative()}${getPhone()}",
                 "template",
                 null,
                 Template("hello_world", Language("en_US"))
@@ -107,6 +107,10 @@ class MessageRepository {
 
     private suspend fun getPhone(): String {
         return UserUseCase().getUser()?.numberEmergency?: "000000"
+    }
+
+    private suspend fun getIndicative() : String {
+        return UserUseCase().getUser()?.countryNumber?: "57"
     }
 
 
