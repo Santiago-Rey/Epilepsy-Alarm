@@ -8,4 +8,5 @@ object MediaPlayerUtil {
 
     val mediaPlayer = MediaPlayer()
     var timer = Timer()
+    var timesAlarm = 0
 }
