@@ -82,55 +82,11 @@ class DashboardFragment : Fragment() {
         }
     }
 
-
-    /*private fun setAlarm(){
-        val selectMusicSpinner = binding.alarmSpinnerConfig
-
-        val stopButton = binding.stopButton
-
-        val audioResources = mapOf(
-            "Alarma 1" to R.raw.alarm_one,
-            "Alarma 2" to R.raw.alarm_two,
-            "Alarma 3" to R.raw.alarm_three
-        )
-
-        val adapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_item,
-            listOf("Predeterminado") + audioResources.map { it.key })
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        selectMusicSpinner.adapter = adapter
-        val position = audioResources.keys.indexOfFirst {
-            audioResources[it] == mainViewModel.getAlarm(requireContext())
-        }
-        selectMusicSpinner.setSelection(position+1)
-        selectMusicSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position != 0) {
-                    val audioName = parent.getItemAtPosition(position) as String
-                    val audioResource = audioResources[audioName]
-                    val audioUri = Uri.parse("android.resource://${requireActivity().packageName}/${audioResource}")
-                    mediaPlayer.apply {
-                        reset()
-                        setDataSource(requireContext(), audioUri)
-                        prepare()
-                        start()
-                    }
-                    myViewModel.soundAlarm.value = audioResource
-
-                    stopButton.visibility = View.VISIBLE
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 
-    }*/
 
 }
